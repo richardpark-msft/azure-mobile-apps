@@ -3,18 +3,15 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="XFBlogClient.Views.NewBlogPage"
              Shell.PresentationMode="ModalAnimated"
-             Title="New Item">
-    <ContentPage.Content>
-        <StackLayout Spacing="3" Padding="15">
-            <Label Text="Text" FontSize="Medium" />
-            <Entry Text="{Binding Text, Mode=TwoWay}" FontSize="Medium" />
-            <Label Text="Description" FontSize="Medium" />
-            <Editor Text="{Binding Description, Mode=TwoWay}" AutoSize="TextChanges" FontSize="Medium" Margin="0" />
-            <StackLayout Orientation="Horizontal">
-                <Button Text="Cancel" Command="{Binding CancelCommand}" HorizontalOptions="FillAndExpand"></Button>
-                <Button Text="Save" Command="{Binding SaveCommand}" HorizontalOptions="FillAndExpand"></Button>
-            </StackLayout>
-        </StackLayout>
-    </ContentPage.Content>
+             Shell.NavBarIsVisible="false"
+             Title="New Blog Post">
+
+    <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto" Padding="20,60,20,0">
+        <Label Grid.Row="0"  Text="New Post" FontSize="45" FontFamily="Helvetica" FontAttributes="Bold" />
+        <Entry Grid.Row="1" Placeholder="Title" />
+        <Entry Grid.Row="2" Placeholder="Image Url" />
+        <Editor Grid.Row="3" Placeholder="Text" HeightRequest="300"  />
+        <Button Grid.Row="4" Text="Save" TextColor="Black" />
+    </Grid>
     
 </ContentPage>

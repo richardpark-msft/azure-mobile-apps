@@ -42,7 +42,7 @@
             </ShellContent.Icon>
         </ShellContent>
 
-        <ShellContent Route="BookmarkPage" ContentTemplate="{DataTemplate local:BookmarkPage}">
+        <ShellContent Route="BookmarksPage" ContentTemplate="{DataTemplate local:BookmarksPage}">
             <ShellContent.Icon>
                 <FontImageSource FontFamily="FontAwesomeSolid" Glyph="&#xf02e;" Size="Large" />
             </ShellContent.Icon>

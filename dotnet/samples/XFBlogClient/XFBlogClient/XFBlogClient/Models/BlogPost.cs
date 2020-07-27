@@ -13,5 +13,6 @@ namespace XFBlogClient.Models
         public string AuthorAvatarUrl { get; set; }
         public string AuthorName { get; set; }
         public DateTime PostedAt { get; set; }
+        public bool IsBookmarked { get; set; }
     }
 }

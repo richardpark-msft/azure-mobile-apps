@@ -22,7 +22,8 @@ namespace XFBlogClient.Services
                 .RuleFor(x => x.AuthorAvatarUrl, a => a.Internet.Avatar())
                 .RuleFor(x => x.AuthorName, a => a.Name.FullName())
                 .RuleFor(x => x.PostedAt, p => p.Date.Past())
-                .RuleFor(x => x.ImageUrl, i => i.Image.PicsumUrl());
+                .RuleFor(x => x.IsBookmarked, i => i.Random.Bool())
+                .RuleFor(x => x.ImageUrl, i => i.Image.PicsumUrl(blur:true));
 
             _blogPosts = testBlogPosts.Generate(20);
         }

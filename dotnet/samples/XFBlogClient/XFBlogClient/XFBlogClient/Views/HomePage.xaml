@@ -98,28 +98,29 @@
             <StackLayout Grid.Row="5" BindableLayout.ItemsSource="{Binding BlogPosts}">
                 <BindableLayout.ItemTemplate>
                     <DataTemplate>
-                        <Grid RowDefinitions="*, Auto" ColumnDefinitions="Auto, 20, *" Padding="0,0,0,20">
+                        <Grid RowDefinitions="*" ColumnDefinitions="Auto, 20, *" Padding="0,0,0,20">
 
                             <yummy:PancakeView Grid.Row="0" Grid.Column="0" CornerRadius="10,10,10,10" HorizontalOptions="FillAndExpand" HeightRequest="75" WidthRequest="75" >
                                 <Image Source="{Binding ImageUrl}" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Aspect="AspectFill" />
                             </yummy:PancakeView>
 
-                            <Grid Grid.Row="0" Grid.Column="2" RowDefinitions="Auto,*" >
+                            <Grid Grid.Row="0" Grid.Column="2" RowDefinitions="Auto,Auto,*" >
                                 <Label Grid.Row="0" Text="DESIGN" TextColor="DarkRed" FontFamily="Helvetica" FontAttributes="Bold" />
                                 <Label Grid.Row="1" Text="{Binding Title}" FontFamily="Helvetica" />
-                            </Grid>
 
-                            <StackLayout Grid.Row="1" Grid.Column="2" Orientation="Horizontal">
-                                <Image>
-                                    <Image.Source>
-                                        <FontImageSource Glyph="&#xf017;"
-                                                         Color="Gray"
-                                                         FontFamily="FontAwesomeSolid"
-                                                         Size="16" />
-                                    </Image.Source>
-                                </Image>
-                                <Label Text="14 sec ago" TextColor="Gray" FontSize="14" FontFamily="Helvetica" />
-                            </StackLayout>
+                                <StackLayout Grid.Row="2" Orientation="Horizontal">
+                                    <Image>
+                                        <Image.Source>
+                                            <FontImageSource Glyph="&#xf017;"
+                                                             Color="Gray"
+                                                             FontFamily="FontAwesomeSolid"
+                                                             Size="16" />
+                                        </Image.Source>
+                                    </Image>
+                                    <Label Text="{Binding PostedAt, Converter={StaticResource DateTimeHumanizerConverter}}" TextColor="Gray" FontSize="14" FontFamily="Helvetica" />
+                                </StackLayout>
+                            </Grid>
+                            
                         </Grid>
 
                     </DataTemplate>

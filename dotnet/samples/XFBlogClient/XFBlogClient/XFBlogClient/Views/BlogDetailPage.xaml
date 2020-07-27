@@ -39,7 +39,7 @@
             </Image>
         </Grid>
 
-        <yummy:PancakeView Grid.Row="3" CornerRadius="20" VerticalOptions="FillAndExpand" BackgroundColor="White">
+        <yummy:PancakeView Grid.Row="3" CornerRadius="20,20,0,0" VerticalOptions="FillAndExpand" BackgroundColor="White">
             <ScrollView>
                 <Grid Padding="20" RowDefinitions="Auto, Auto, Auto, Auto, *" RowSpacing="10">
                     <Label Grid.Row="0" Text="DESIGN" Style="{DynamicResource TopicLabel}" />

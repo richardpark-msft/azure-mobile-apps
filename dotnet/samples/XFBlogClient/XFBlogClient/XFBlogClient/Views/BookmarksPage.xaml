@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="XFBlogClient.Views.BookmarksPage"
+             xmlns:vm="clr-namespace:XFBlogClient.ViewModels"
+             xmlns:pancakeView="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+             xmlns:valueConverters="clr-namespace:XFBlogClient.ValueConverters;assembly=XFBlogClient"
+             Shell.NavBarIsVisible="False"
+             Title="{Binding Bookmarks}">
+
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <valueConverters:DateTimeHumanizerConverter x:Key="DateTimeHumanizerConverter" />
+            <valueConverters:StringCapitalizationConverter x:Key="StringCapitalizationConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ScrollView>
+        <StackLayout Padding="20,0,20,0">
+            <Label Text="Bookmarks" FontSize="45" FontAttributes="Bold" FontFamily="Helvetica" />
+
+            <StackLayout BindableLayout.ItemsSource="{Binding BlogPosts}" >
+        <BindableLayout.ItemTemplate>
+            <DataTemplate>
+
+                <Grid RowDefinitions="60, Auto" ColumnDefinitions="Auto, 20, *" Padding="0,0,0,20">
+
+                    <pancakeView:PancakeView Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" CornerRadius="10,10,10,10" HorizontalOptions="FillAndExpand" HeightRequest="75" WidthRequest="75" >
+                        <Image Source="{Binding ImageUrl}" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Aspect="AspectFill" />
+                    </pancakeView:PancakeView>
+
+                    <Grid Grid.Row="0" Grid.Column="2" RowDefinitions="Auto,*" >
+                        <Label Grid.Row="0" Text="DESIGN" TextColor="DarkRed" FontFamily="Helvetica" FontAttributes="Bold" />
+                        <Label Grid.Row="1" Text="{Binding Title}" FontFamily="Helvetica" />
+                    </Grid>
+
+                    <StackLayout Grid.Row="1" Grid.Column="2" Orientation="Horizontal">
+                        <Image>
+                            <Image.Source>
+                                <FontImageSource Glyph="&#xf017;"
+                                                 Color="Gray"
+                                                 FontFamily="FontAwesomeSolid"
+                                                 Size="16" />
+                            </Image.Source>
+                        </Image>
+                        <Label Text="{Binding PostedAt, Converter={StaticResource DateTimeHumanizerConverter}}" TextColor="Gray" FontSize="14" FontFamily="Helvetica" />
+                    </StackLayout>
+                </Grid>
+
+            </DataTemplate>
+        </BindableLayout.ItemTemplate>
+    </StackLayout>
+        </StackLayout>
+    </ScrollView>
+</ContentPage>
