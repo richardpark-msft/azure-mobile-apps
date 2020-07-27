@@ -5,6 +5,7 @@
              xmlns:vm="clr-namespace:XamarinFormsBlogClient.ViewModels"
              xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
              xmlns:converters="clr-namespace:XamarinFormsBlogClient.ValueConverters"
+             Shell.NavBarIsVisible="false"
              Title="{Binding Title}">
 
     <ContentPage.BindingContext>
@@ -64,12 +65,12 @@
                                         <Image Source="{Binding AuthorAvatarUrl}" Aspect="AspectFill"  />
                                     </yummy:PancakeView>
 
-                                    <Label Grid.Row="0" Grid.Column="1" Text="{Binding AuthorName}" Style="{DynamicResource AuthorLabel}" />
+                                    <Label Grid.Row="0" Grid.Column="1" Text="{Binding AuthorName}" Style="{DynamicResource AuthorNameLabel}" />
                                     <StackLayout Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
                                         <Image VerticalOptions="CenterAndExpand">
                                             <Image.Source>
                                                 <FontImageSource Glyph="&#xf017;"
-                                                                 Color="Black"
+                                                                 Color="#505050"
                                                                  FontFamily="FontAwesomeSolid"
                                                                  Size="12" />
                                             </Image.Source>
