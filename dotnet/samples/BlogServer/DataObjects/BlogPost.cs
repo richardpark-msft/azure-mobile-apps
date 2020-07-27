@@ -8,5 +8,6 @@ namespace BlogServer.DataObjects
         public string Data { get; set; }
         public string ImageUrl { get; set; }
         public int CommentCount { get; set; }
+        public string OwnerId { get; set; }
     }
 }

@@ -10,6 +10,7 @@ namespace BlogServer.Database
     {
         public static void Initialize(BlogDbContext context)
         {
+            //context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
             context.SaveChanges();
         }
