@@ -1,0 +1,135 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="XFBlogClient.Views.HomePage"
+             xmlns:vm="clr-namespace:XFBlogClient.ViewModels"
+             xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+             xmlns:converters="clr-namespace:XFBlogClient.ValueConverters"
+             Shell.NavBarIsVisible="false"
+             Title="{Binding Title}">
+
+    <ContentPage.BindingContext>
+        <vm:HomeViewModel />
+    </ContentPage.BindingContext>
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:DateTimeHumanizerConverter x:Key="DateTimeHumanizerConverter" />
+            <converters:StringCapitalizationConverter x:Key="StringCapitalizationConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ScrollView>
+        <Grid RowDefinitions="Auto,60,30,Auto,60,*" HorizontalOptions="Fill" Padding="20,0,20,0">
+
+            <Label Grid.Row="0" Text="SUNDAY 4 AUGUST" Style="{DynamicResource TopicLabel}" />
+
+            <Grid Grid.Row="1" ColumnDefinitions="*,Auto">
+                <Label Grid.Column="0" Text="Blog" FontSize="45" FontAttributes="Bold" FontFamily="Helvetica" />
+
+                <yummy:PancakeView Grid.Column="1" CornerRadius="10" HorizontalOptions="FillAndExpand" HeightRequest="60" WidthRequest="60" Border="{yummy:BorderMarkup Color=Black, Thickness='1'}">
+                    <Image Source="{Binding AvatarUrl}" HorizontalOptions="End"  />
+                </yummy:PancakeView>
+
+            </Grid>
+
+            <CarouselView Grid.Row="3" ItemsSource="{Binding BlogPosts}" PeekAreaInsets="20" HeightRequest="340" CurrentItem="{Binding SelectedBlogPost}">
+                <CarouselView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Horizontal" ItemSpacing="10" />
+                </CarouselView.ItemsLayout>
+
+                <CarouselView.ItemTemplate>
+                    <DataTemplate>
+
+                        <yummy:PancakeView CornerRadius="40" HorizontalOptions="FillAndExpand" HeightRequest="240" WidthRequest="240">
+
+
+                            <Grid RowDefinitions="Auto,*,Auto,Auto"  >
+                                <Image Grid.Row="0" HorizontalOptions="End" HeightRequest="40" WidthRequest="40" >
+                                    <Image.Source>
+                                        <FontImageSource FontFamily="FontAwesomeSolid" Color="White" Glyph="&#xf02e;" />
+                                    </Image.Source>
+                                </Image>
+                                
+                                <Image Grid.Row="0" Grid.RowSpan="4" Source="{Binding ImageUrl}" 
+                                       HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 
+                                       Aspect="AspectFill"  />
+
+                                <yummy:PancakeView Grid.Row="2" Grid.RowSpan="2" CornerRadius="20,20,0,0" BackgroundColor="White" Opacity=".9">
+
+                                </yummy:PancakeView>
+
+                                <Label Grid.Row="2" Text="{Binding Title, Converter={StaticResource StringCapitalizationConverter}}" Padding="10,20,10,0" Style="{DynamicResource TitleLabel}" />
+                                <Grid Grid.Row="3" RowDefinitions="Auto,Auto" ColumnDefinitions="Auto, *" Padding="10,0,10,15">
+                                    <yummy:PancakeView Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" CornerRadius="10" WidthRequest="40" Border="{yummy:BorderMarkup Color=Black, Thickness='1'}">
+                                        <Image Source="{Binding AuthorAvatarUrl}" Aspect="AspectFill"  />
+                                    </yummy:PancakeView>
+
+                                    <Label Grid.Row="0" Grid.Column="1" Text="{Binding AuthorName}" Style="{DynamicResource AuthorNameLabel}" />
+                                    <StackLayout Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
+                                        <Image VerticalOptions="CenterAndExpand">
+                                            <Image.Source>
+                                                <FontImageSource Glyph="&#xf017;"
+                                                                 Color="#505050"
+                                                                 FontFamily="FontAwesomeSolid"
+                                                                 Size="12" />
+                                            </Image.Source>
+                                        </Image>
+                                        <Label Text="{Binding PostedAt, Converter={StaticResource DateTimeHumanizerConverter}}" Style="{DynamicResource PostedAtLabel}" />
+                                    </StackLayout>
+
+                                </Grid>
+                            </Grid>
+
+                            <yummy:PancakeView.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:HomeViewModel}}, Path=ShowBlogPost}" />
+                            </yummy:PancakeView.GestureRecognizers>
+                        </yummy:PancakeView>
+
+                    </DataTemplate>
+                </CarouselView.ItemTemplate>
+            </CarouselView>
+
+            <Grid Grid.Row="4" ColumnDefinitions="*, Auto">
+                <Label Grid.Column="0" Text="Popular" FontSize="36" FontAttributes="Bold"  FontFamily="Helvetica" VerticalOptions="Center"  />
+                <Label Grid.Column="1" Text="Show all" TextColor="DarkOrange"  VerticalOptions="Center" FontFamily="FiraSansRegular" />
+            </Grid>
+
+            <StackLayout Grid.Row="5" BindableLayout.ItemsSource="{Binding BlogPosts}">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate>
+                        <Grid RowDefinitions="*, Auto" ColumnDefinitions="Auto, 20, *" Padding="0,0,0,20">
+
+                            <yummy:PancakeView Grid.Row="0" Grid.Column="0" CornerRadius="10,10,10,10" HorizontalOptions="FillAndExpand" HeightRequest="75" WidthRequest="75" >
+                                <Image Source="{Binding ImageUrl}" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Aspect="AspectFill" />
+                            </yummy:PancakeView>
+
+                            <Grid Grid.Row="0" Grid.Column="2" RowDefinitions="Auto,*" >
+                                <Label Grid.Row="0" Text="DESIGN" TextColor="DarkRed" FontFamily="Helvetica" FontAttributes="Bold" />
+                                <Label Grid.Row="1" Text="{Binding Title}" FontFamily="Helvetica" />
+                            </Grid>
+
+                            <StackLayout Grid.Row="1" Grid.Column="2" Orientation="Horizontal">
+                                <Image>
+                                    <Image.Source>
+                                        <FontImageSource Glyph="&#xf017;"
+                                                         Color="Gray"
+                                                         FontFamily="FontAwesomeSolid"
+                                                         Size="16" />
+                                    </Image.Source>
+                                </Image>
+                                <Label Text="14 sec ago" TextColor="Gray" FontSize="14" FontFamily="Helvetica" />
+                            </StackLayout>
+                        </Grid>
+
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </StackLayout>
+
+
+        </Grid>
+    </ScrollView>
+
+
+
+</ContentPage>

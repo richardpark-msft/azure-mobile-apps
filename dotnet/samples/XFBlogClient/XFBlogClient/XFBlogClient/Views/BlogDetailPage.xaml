@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="XFBlogClient.Views.BlogDetailPage"
+             xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+             xmlns:valueConverters="clr-namespace:XFBlogClient.ValueConverters;assembly=XFBlogClient"
+             Shell.NavBarIsVisible="false"
+             Title="{Binding Title}">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <valueConverters:DateTimeHumanizerConverter x:Key="DateTimeHumanizerConverter" />
+            <valueConverters:StringCapitalizationConverter x:Key="StringCapitalizationConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <Grid Padding="0" Margin="0" RowDefinitions="40,Auto,300,*" RowSpacing="0">
+        <Image Grid.Row="0" Grid.RowSpan="4" Source="{Binding BlogPost.ImageUrl}" Aspect="AspectFill" Opacity=".8" />
+        <Frame Grid.Row="0" BackgroundColor="White" Opacity=".5" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" HasShadow="False" CornerRadius="0" />
+        <Grid Grid.Row="1" Padding="0" Margin="0" ColumnDefinitions="*,*">
+            <Frame Grid.Column="0" Grid.ColumnSpan="2" BackgroundColor="White" Opacity=".5" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" HasShadow="False" CornerRadius="0" />
+            
+            <StackLayout Orientation="Horizontal" Padding="10,0">
+                <StackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding NavigateBackCommand}" />
+                </StackLayout.GestureRecognizers>
+                <Image HeightRequest="20" WidthRequest="20" >
+                    <Image.Source>
+                        <FontImageSource FontFamily="FontAwesomeSolid" Color="Black" Glyph="&#xf053;" />
+                    </Image.Source>
+                </Image>
+                <Label Text="Back" TextColor="Black" FontFamily="Helvetica" FontSize="Medium" VerticalOptions="Center" />
+            </StackLayout>
+
+            <Image Grid.Column="1"  HorizontalOptions="End" HeightRequest="20" WidthRequest="20" Margin="0,0,20,0" >
+                <Image.Source>
+                    <FontImageSource FontFamily="FontAwesomeSolid" Color="Black" Glyph="&#xf02e;" />
+                </Image.Source>
+            </Image>
+        </Grid>
+
+        <yummy:PancakeView Grid.Row="3" CornerRadius="20" VerticalOptions="FillAndExpand" BackgroundColor="White">
+            <ScrollView>
+                <Grid Padding="20" RowDefinitions="Auto, Auto, Auto, Auto, *" RowSpacing="10">
+                    <Label Grid.Row="0" Text="DESIGN" Style="{DynamicResource TopicLabel}" />
+                    <Label Grid.Row="1" Text="{Binding BlogPost.Title, Converter={StaticResource StringCapitalizationConverter}}" Style="{DynamicResource TitleLabel}" />
+
+                    <StackLayout Grid.Row="2" Orientation="Horizontal">
+                        <Image VerticalOptions="CenterAndExpand">
+                            <Image.Source>
+                                <FontImageSource Glyph="&#xf017;"
+                                             Color="#505050"
+                                             FontFamily="FontAwesomeSolid"
+                                             Size="12" />
+                            </Image.Source>
+                        </Image>
+
+                        <Label Text="{Binding BlogPost.PostedAt, Converter={StaticResource DateTimeHumanizerConverter}}" Style="{DynamicResource PostedAtLabel}" />
+                        
+                        <Image VerticalOptions="CenterAndExpand" Margin="30,0,0,0">
+                            <Image.Source>
+                                <FontImageSource Glyph="&#xf164;"
+                                             Color="#505050"
+                                             FontFamily="FontAwesomeSolid"
+                                             Size="12" />
+                            </Image.Source>
+                        </Image>
+
+                        <Label Text="{Binding BlogPost.CommentCount}" Style="{DynamicResource PostedAtLabel}"  />
+
+                    </StackLayout>
+
+                    <Grid ColumnDefinitions="50,*" Grid.Row="3">
+                        <yummy:PancakeView Grid.Row="0" Grid.Column="0" CornerRadius="10" WidthRequest="50" VerticalOptions="Center" Border="{yummy:BorderMarkup Color=Black, Thickness='1'}">
+                            <Image Source="{Binding BlogPost.AuthorAvatarUrl}" Aspect="AspectFill"  />
+                        </yummy:PancakeView>
+                        <Label Grid.Column="1" Text="{Binding BlogPost.AuthorName}" Style="{DynamicResource AuthorNameLabel}" VerticalOptions="Center" />
+                    </Grid>
+
+                    <Label Grid.Row="4" Text="{Binding BlogPost.Data}" Style="{DynamicResource BodyLabel}" Padding="0,10,0,0" />
+                </Grid>
+            </ScrollView>
+        </yummy:PancakeView>
+
+    </Grid>
+</ContentPage>

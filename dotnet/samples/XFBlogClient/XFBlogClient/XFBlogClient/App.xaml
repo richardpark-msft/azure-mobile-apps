@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Application xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="XFBlogClient.App">
+    <!--
+        Define global resources and styles here, that apply to all pages in your app.
+    -->
+    <Application.Resources>
+        <ResourceDictionary>
+            <Color x:Key="Primary">White</Color>
+            <Style TargetType="Button">
+                <Setter Property="TextColor" Value="White"></Setter>
+                <Setter Property="VisualStateManager.VisualStateGroups">
+                    <VisualStateGroupList>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="Normal">
+                                <VisualState.Setters>
+                                    <Setter Property="BackgroundColor" Value="{StaticResource Primary}" />
+                                </VisualState.Setters>
+                            </VisualState>
+                            <VisualState x:Name="Disabled">
+                                <VisualState.Setters>
+                                    <Setter Property="BackgroundColor" Value="#332196F3" />
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </Setter>
+            </Style>
+
+            <Style TargetType="Label" x:Key="TopicLabel">
+                <Setter Property="TextColor" Value="DarkOrange" />
+                <Setter Property="FontSize" Value="Medium" />
+                <Setter Property="FontFamily" Value="FiraSansRegular" />
+            </Style>
+
+            <Style TargetType="Label" x:Key="TitleLabel">
+                <Setter Property="TextColor" Value="Black" />
+                <Setter Property="FontSize" Value="Large" />
+                <Setter Property="FontFamily" Value="Helvetica" />
+                <Setter Property="FontAttributes" Value="Bold" />
+            </Style>
+
+            <Style TargetType="Label" x:Key="AuthorNameLabel">
+                <Setter Property="TextColor" Value="#505050" />
+                <Setter Property="FontSize" Value="Small" />
+                <Setter Property="FontFamily" Value="Helvetica" />
+            </Style>
+
+            <Style TargetType="Label" x:Key="PostedAtLabel">
+                <Setter Property="TextColor" Value="#505050" />
+                <Setter Property="FontSize" Value="Small" />
+                <Setter Property="FontFamily" Value="Helvetica" />
+                <Setter Property="VerticalOptions" Value="CenterAndExpand" />
+            </Style>
+
+            <Style TargetType="Label" x:Key="BodyLabel">
+                <Setter Property="TextColor" Value="#282828" />
+                <Setter Property="FontSize" Value="Medium" />
+                <Setter Property="FontFamily" Value="Helvetica" />
+            </Style>
+
+        </ResourceDictionary>        
+    </Application.Resources>
+</Application>
