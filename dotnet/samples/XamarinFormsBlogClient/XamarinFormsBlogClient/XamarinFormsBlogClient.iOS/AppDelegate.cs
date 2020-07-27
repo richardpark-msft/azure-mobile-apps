@@ -24,6 +24,11 @@ namespace XamarinFormsBlogClient.iOS
         {
             global::Xamarin.Forms.Forms.SetFlags("CollectionView_Experimental");
             global::Xamarin.Forms.Forms.Init();
+
+            UITabBar.Appearance.BackgroundImage = new UIImage();
+            UITabBar.Appearance.BackgroundColor = UIColor.White;
+            UITabBar.Appearance.ShadowImage = new UIImage();
+
             LoadApplication(new App());
 
             return base.FinishedLaunching(app, options);

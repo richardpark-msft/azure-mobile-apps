@@ -1,36 +1,54 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Bogus;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 using XamarinFormsBlogClient.Models;
+using XamarinFormsBlogClient.Services;
+using XamarinFormsBlogClient.Views;
 
 namespace XamarinFormsBlogClient.ViewModels
 {
     public class HomeViewModel : BaseViewModel
     {
-        public List<BlogPost> BlogPosts { get; set; }
-        public string AvatarUrl { get; set; }
+        public ObservableCollection<BlogPost> BlogPosts { get; set; }
+
+
+        private string _avatarUrl;
+        public string AvatarUrl
+        {
+            get => _avatarUrl;
+            set => SetProperty(ref _avatarUrl, value);
+        }
+
+        private BlogPost _selectedBlogPost;
+        public BlogPost SelectedBlogPost
+        {
+            get => _selectedBlogPost;
+            set => SetProperty(ref _selectedBlogPost, value);
+        }
+
+        public Command ShowBlogPost { get; set; }
+
         public HomeViewModel()
         {
+            ShowBlogPost = new Command(async (post) => await OnShowBlogPost());
             Title = "Home";
 
             AvatarUrl = new Faker().Internet.Avatar();
 
-            var testBlogPosts = new Faker<BlogPost>()
-                .RuleFor(x => x.Title, t => t.Lorem.Sentence())
-                .RuleFor(x => x.Data, d => d.Lorem.Paragraphs(4))
-                .RuleFor(x => x.CommentCount, c => c.Random.Number(0, 100))
-                .RuleFor(x => x.ShowComments, s => s.Random.Bool())
-                .RuleFor(x => x.ImageUrl, i => i.Image.PicsumUrl());
+            var dataStore = DependencyService.Get<IDataStore<BlogPost>>();
 
-            var blogPosts = testBlogPosts.Generate(20);
-
-            BlogPosts = blogPosts;
-            OpenWebCommand = new Command(async () => await Browser.OpenAsync("https://aka.ms/xamain-quickstart"));
+            var blogPosts = dataStore.GetItemsAsync().GetAwaiter().GetResult();
+            BlogPosts = new ObservableCollection<BlogPost>(blogPosts);
         }
 
-        public ICommand OpenWebCommand { get; }
+        private async Task OnShowBlogPost()
+        {
+            await Shell.Current.GoToAsync($"{nameof(BlogDetailPage)}?{nameof(BlogDetailViewModel.ItemId)}={SelectedBlogPost.Id}");
+        }
     }
 }

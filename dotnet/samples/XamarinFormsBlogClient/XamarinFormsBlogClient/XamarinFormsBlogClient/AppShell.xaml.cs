@@ -11,7 +11,7 @@ namespace XamarinFormsBlogClient
         public AppShell()
         {
             InitializeComponent();
-            Routing.RegisterRoute(nameof(ItemDetailPage), typeof(ItemDetailPage));
+            Routing.RegisterRoute(nameof(BlogDetailPage), typeof(BlogDetailPage));
             Routing.RegisterRoute(nameof(NewBlogPage), typeof(NewBlogPage));
         }
 

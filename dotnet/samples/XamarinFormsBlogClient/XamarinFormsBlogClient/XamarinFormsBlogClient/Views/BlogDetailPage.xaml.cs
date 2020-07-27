@@ -4,12 +4,13 @@ using XamarinFormsBlogClient.ViewModels;
 
 namespace XamarinFormsBlogClient.Views
 {
-    public partial class ItemDetailPage : ContentPage
+    public partial class BlogDetailPage : ContentPage
     {
-        public ItemDetailPage()
+        public BlogDetailPage()
         {
             InitializeComponent();
-            BindingContext = new ItemDetailViewModel();
+            NavigationPage.SetHasNavigationBar(this, false);
+            BindingContext = new BlogDetailViewModel();
         }
     }
 }

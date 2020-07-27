@@ -27,6 +27,39 @@
                     </VisualStateGroupList>
                 </Setter>
             </Style>
+
+            <Style TargetType="Label" x:Key="TopicLabel">
+                <Setter Property="TextColor" Value="DarkOrange" />
+                <Setter Property="FontSize" Value="Medium" />
+                <Setter Property="FontFamily" Value="FiraSansRegular" />
+            </Style>
+
+            <Style TargetType="Label" x:Key="TitleLabel">
+                <Setter Property="TextColor" Value="Black" />
+                <Setter Property="FontSize" Value="Large" />
+                <Setter Property="FontFamily" Value="Helvetica" />
+                <Setter Property="FontAttributes" Value="Bold" />
+            </Style>
+
+            <Style TargetType="Label" x:Key="AuthorLabel">
+                <Setter Property="TextColor" Value="Black" />
+                <Setter Property="FontSize" Value="Small" />
+                <Setter Property="FontFamily" Value="Helvetica" />
+            </Style>
+
+            <Style TargetType="Label" x:Key="PostedAtLabel">
+                <Setter Property="TextColor" Value="Black" />
+                <Setter Property="FontSize" Value="Small" />
+                <Setter Property="FontFamily" Value="Helvetica" />
+                <Setter Property="VerticalOptions" Value="CenterAndExpand" />
+            </Style>
+
+            <Style TargetType="Label" x:Key="BodyLabel">
+                <Setter Property="TextColor" Value="DarkGray" />
+                <Setter Property="FontSize" Value="Medium" />
+                <Setter Property="FontFamily" Value="Helvetica" />
+            </Style>
+
         </ResourceDictionary>        
     </Application.Resources>
 </Application>

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
-
+﻿using Xamarin.Forms;
 using XamarinFormsBlogClient.Models;
 using XamarinFormsBlogClient.ViewModels;
 
@@ -11,7 +6,7 @@ namespace XamarinFormsBlogClient.Views
 {
     public partial class NewBlogPage : ContentPage
     {
-        public Item Item { get; set; }
+        public BlogPost Post { get; set; }
 
         public NewBlogPage()
         {

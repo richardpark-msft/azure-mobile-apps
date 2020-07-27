@@ -49,14 +49,14 @@ namespace XamarinFormsBlogClient.ViewModels
 
         private async void OnSave()
         {
-            Item newItem = new Item()
+            BlogPost newBlogPost = new BlogPost()
             {
                 Id = Guid.NewGuid().ToString(),
-                Text = Text,
-                Description = Description
+                Title = Text,
+                Data = Description
             };
 
-            await DataStore.AddItemAsync(newItem);
+            await DataStore.AddItemAsync(newBlogPost);
 
             // This will pop the current page off the navigation stack
             await Shell.Current.GoToAsync("..");

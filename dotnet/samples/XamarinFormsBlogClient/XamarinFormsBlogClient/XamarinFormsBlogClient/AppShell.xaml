@@ -30,27 +30,27 @@
     </Shell.Resources>
 
     <TabBar>
-        <ShellContent Title="Home" Route="HomePage" ContentTemplate="{DataTemplate local:HomePage}">
+        <ShellContent Route="HomePage" ContentTemplate="{DataTemplate local:HomePage}">
             <ShellContent.Icon>
-                <FontImageSource FontFamily="FontAwesomeSolid" Glyph="&#xf015;" />
+                <FontImageSource FontFamily="FontAwesomeSolid" Glyph="&#xf015;" Size="Large"/>
             </ShellContent.Icon>
         </ShellContent>
         
-        <ShellContent Title="New Post" Route="NewBlogPage" ContentTemplate="{DataTemplate local:NewBlogPage}">
+        <ShellContent Route="NewBlogPage" ContentTemplate="{DataTemplate local:NewBlogPage}">
             <ShellContent.Icon>
-                <FontImageSource FontFamily="FontAwesomeSolid" Glyph="&#xf14b;" />
+                <FontImageSource FontFamily="FontAwesomeSolid" Glyph="&#xf14b;" Size="Large"/>
             </ShellContent.Icon>
         </ShellContent>
 
-        <ShellContent Title="Bookmarks" Route="BookmarkPage" ContentTemplate="{DataTemplate local:BookmarkPage}">
+        <ShellContent Route="BookmarkPage" ContentTemplate="{DataTemplate local:BookmarkPage}">
             <ShellContent.Icon>
-                <FontImageSource FontFamily="FontAwesomeSolid" Glyph="&#xf02e;" />
+                <FontImageSource FontFamily="FontAwesomeSolid" Glyph="&#xf02e;" Size="Large" />
             </ShellContent.Icon>
         </ShellContent>
 
-        <ShellContent Title="Profile" ContentTemplate="{DataTemplate local:ProfilePage}">
+        <ShellContent Route="ProfilePage" ContentTemplate="{DataTemplate local:ProfilePage}">
             <ShellContent.Icon>
-                <FontImageSource FontFamily="FontAwesomeSolid" Glyph="&#xf2bd;" />
+                <FontImageSource FontFamily="FontAwesomeSolid" Glyph="&#xf2bd;" Size="Large" />
             </ShellContent.Icon>
         </ShellContent>
     </TabBar>
