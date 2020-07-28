@@ -2,8 +2,10 @@
 using Azure.Mobile.Server.Entity;
 using BlogServer.Database;
 using BlogServer.DataObjects;
+using BlogServer.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Identity.Web;
+using System.Threading.Tasks;
 
 namespace BlogServer.Controllers
 {
@@ -11,14 +13,17 @@ namespace BlogServer.Controllers
     [ApiController]
     public class UsersController : TableController<User>
     {
-        public UsersController(BlogDbContext context)
+        private readonly IUserService _userService;
+
+        public UsersController(BlogDbContext context, IUserService userService)
         {
             TableRepository = new EntityTableRepository<User>(context);
+            _userService = userService;
         }
 
         public override bool IsAuthorized(TableOperation operation, User item)
         {
-            var userId = this.User.GetObjectId();
+            var userId = _userService.GetUserId();
 
             if (operation == TableOperation.Create && userId is null)
             {
@@ -33,7 +38,7 @@ namespace BlogServer.Controllers
             return true;
         }
 
-        public override User PrepareItemForStore(User item)
+        public override async Task<User> PrepareItemForStoreAsync(User item)
         {
             // Using Object Id as UserId since this ID uniquely identifies the user across applications.
             // Two different applications signing in the same user will receive the same value in the oid claim.

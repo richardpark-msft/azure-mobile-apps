@@ -1,5 +1,6 @@
 using Azure.Mobile.Server;
 using BlogServer.Database;
+using BlogServer.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -26,6 +27,8 @@ namespace BlogServer
         {
             services.AddMicrosoftWebApiAuthentication(Configuration);
             services.AddAuthorization();
+            services.AddHttpContextAccessor();
+            services.AddScoped<IUserService, UserService>();
 
             services.AddDbContext<BlogDbContext>(options =>
             {

@@ -2,8 +2,10 @@
 using Azure.Mobile.Server.Entity;
 using BlogServer.Database;
 using BlogServer.DataObjects;
+using BlogServer.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Identity.Web;
+using System;
+using System.Threading.Tasks;
 
 namespace BlogServer.Controllers
 {
@@ -11,25 +13,25 @@ namespace BlogServer.Controllers
     [ApiController]
     public class BlogPostsController : TableController<BlogPost>
     {
-        public BlogPostsController(BlogDbContext context)
+        private readonly IUserService _userService;
+
+        public BlogPostsController(BlogDbContext context, IUserService userService)
         {
             TableRepository = new EntityTableRepository<BlogPost>(context);
+            _userService = userService;
         }
 
-        public override BlogPost PrepareItemForStore(BlogPost item)
+        public override async Task<BlogPost> PrepareItemForStoreAsync(BlogPost item)
         {
-            // Using Object Id as UserId since this ID uniquely identifies the user across applications.
-            // Two different applications signing in the same user will receive the same value in the oid claim.
-            // GetNameIdentifierId() returns the sub claim that it is unique to a particular application ID. 
-            // Therefore, if a single user signs into two different apps using two different client IDs, 
-            // those apps will receive two different values for the subject claim.
-            item.OwnerId = this.User.GetObjectId();
+            var user = await _userService.GetOrPopulateUserAsync();
+            item.OwnerId = user.Id;
+            item.PostedAt = DateTimeOffset.Now;
             return item;
         }
 
         public override bool IsAuthorized(TableOperation operation, BlogPost item)
         {
-            var userId = this.User.GetObjectId();
+            var userId = _userService.GetUserId();
 
             if (operation == TableOperation.Create && userId is null)
             {
