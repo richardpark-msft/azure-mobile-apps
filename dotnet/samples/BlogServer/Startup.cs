@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Identity.Web;
+using System.Reflection;
 
 namespace BlogServer
 {
@@ -29,7 +30,10 @@ namespace BlogServer
             services.AddDbContext<BlogDbContext>(options =>
             {
                 var connectionString = Configuration.GetConnectionString("MS_TableConnectionString");
-                options.UseSqlServer(connectionString);
+                options.UseSqlServer(connectionString, sqlServerOptionsAction: sqlOptions =>
+                {
+                    sqlOptions.MigrationsAssembly(typeof(BlogDbContext).GetTypeInfo().Assembly.GetName().Name);
+                });
             });
 
             services.AddAzureMobileApps();

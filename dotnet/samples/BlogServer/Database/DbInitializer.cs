@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace BlogServer.Database
 {
@@ -10,8 +6,7 @@ namespace BlogServer.Database
     {
         public static void Initialize(BlogDbContext context)
         {
-            //context.Database.EnsureDeleted();
-            context.Database.EnsureCreated();
+            context.Database.Migrate();
             context.SaveChanges();
         }
     }
