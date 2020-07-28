@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BlogServer.Controllers
 {
-    [Route("tables/blog_posts")]
+    [Route("tables/blogposts")]
     [ApiController]
     public class BlogPostsController : TableController<BlogPost>
     {
