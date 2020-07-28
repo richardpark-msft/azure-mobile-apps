@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Mobile.Client;
+using Azure.Mobile.Client.Auth;
 using Bogus;
 using Microsoft.Identity.Client;
 using XFBlogClient.Models;
@@ -29,6 +30,8 @@ namespace XFBlogClient.Services
                 .RuleFor(x => x.ImageUrl, i => i.Image.PicsumUrl(blur:true));
 
             _blogPosts = testBlogPosts.Generate(20);
+
+            
         }
 
         public async Task Login()
@@ -46,12 +49,30 @@ namespace XFBlogClient.Services
             }
             catch (MsalUiRequiredException ex)
             {
-                result = await App.AuthenticationClient.AcquireTokenInteractive(Constants.Scopes).ExecuteAsync();
+                try
+                {
+                    result = await App.AuthenticationClient.AcquireTokenInteractive(Constants.Scopes).ExecuteAsync();
+
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                    throw;
+                }
             }
-            
-            var client = new MobileDataClient(new Uri("https://blogserver-zumo-next.azurewebsites.net"), result);
+            var credential = new PreauthorizedTokenCredential(result.AccessToken);
+            var client = new MobileDataClient(new Uri("https://blogserver-zumo-next.azurewebsites.net"), credential);
             var table = client.GetTable<BlogPost>();
-            var list = table.GetItems();
+            try
+            {
+                var list = table.GetItems().ToList();
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
         }
 
 

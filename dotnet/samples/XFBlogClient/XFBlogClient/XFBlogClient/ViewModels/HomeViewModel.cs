@@ -16,7 +16,7 @@ namespace XFBlogClient.ViewModels
     {
         public ObservableCollection<BlogPost> BlogPosts { get; set; }
 
-
+        public Command LoginCommand { get; set; }
         private string _avatarUrl;
         public string AvatarUrl
         {
@@ -35,6 +35,7 @@ namespace XFBlogClient.ViewModels
 
         public HomeViewModel()
         {
+            LoginCommand = new Command(async () => OnLogin());
             ShowBlogPost = new Command(async (post) => await OnShowBlogPost());
             Title = "Home";
 
@@ -44,6 +45,12 @@ namespace XFBlogClient.ViewModels
 
             var blogPosts = dataStore.GetItemsAsync().GetAwaiter().GetResult();
             BlogPosts = new ObservableCollection<BlogPost>(blogPosts);
+        }
+
+        private async Task OnLogin()
+        {
+            var dataService = DependencyService.Get<IDataStore<BlogPost>>();
+            await dataService.Login();
         }
 
         private async Task OnShowBlogPost()

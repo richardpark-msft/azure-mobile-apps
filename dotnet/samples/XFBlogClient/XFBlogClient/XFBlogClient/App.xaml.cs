@@ -24,10 +24,10 @@ namespace XFBlogClient
 
 
             AuthenticationClient = PublicClientApplicationBuilder.Create(Constants.ClientId)
-                .WithIosKeychainSecurityGroup(Constants.IosKeychainSecurityGroups)
+                //.WithIosKeychainSecurityGroup(Constants.IosKeychainSecurityGroups)
                 //.WithB2CAuthority(Constants.AuthoritySignin)
                 //.WithParentActivityOrWindow(() => UIParent)
-                //.WithRedirectUri($"msal{Constants.ClientId}://auth")
+                .WithRedirectUri($"msal{Constants.ClientId}://auth")
                 .Build();
 
             InitializeComponent();
