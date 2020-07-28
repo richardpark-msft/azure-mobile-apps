@@ -3,8 +3,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using System;
 
 namespace E2EServer
 {
@@ -22,16 +20,8 @@ namespace E2EServer
 
             using (var scope = host.Services.CreateScope())
             {
-                try
-                {
-                    DbInitializer.Initialize(scope.ServiceProvider.GetRequiredService<E2EDbContext>());
-                }
-                catch (Exception ex)
-                {
-                    var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
-                    logger.LogError(ex, "An error occurred while seeding the database");
-                    throw;
-                }
+                var context = scope.ServiceProvider.GetRequiredService<E2EDbContext>();
+                DbInitializer.Initialize(context);
             }
 
             host.Run();
@@ -51,16 +41,8 @@ namespace E2EServer
 
             using (var scope = server.Services.CreateScope())
             {
-                try
-                {
-                    DbInitializer.Initialize(scope.ServiceProvider.GetRequiredService<E2EDbContext>());
-                }
-                catch (Exception ex)
-                {
-                    var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
-                    logger.LogError(ex, "An error occurred while seeding the database");
-                    throw;
-                }
+                var context = scope.ServiceProvider.GetRequiredService<E2EDbContext>();
+                DbInitializer.Initialize(context);
             }
 
             return server;

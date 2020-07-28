@@ -27,13 +27,15 @@ namespace E2EServer
         {
             services.AddDbContext<E2EDbContext>(options =>
             {
+                // TestServer does not read appsettings natively.
                 if (WebHostEnvironment.IsEnvironment("Test"))
                 {
-                    options.UseInMemoryDatabase(Guid.NewGuid().ToString("N"));
-                }
+                    options.UseSqlServer("Data Source=(localdb)\\mssqllocaldb;Database=UnitTests;Trusted_Connection=True;");
+                } 
                 else
                 {
-                    options.UseSqlServer(Configuration.GetConnectionString("MS_TableConnectionString"));
+                    var connectionString = Configuration.GetConnectionString("MS_TableConnectionString");
+                    options.UseSqlServer(connectionString);
                 }
             });
 
