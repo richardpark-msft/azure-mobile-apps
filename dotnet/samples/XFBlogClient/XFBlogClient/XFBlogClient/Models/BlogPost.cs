@@ -1,8 +1,9 @@
 ﻿using System;
+using Azure.Mobile.Client;
 
 namespace XFBlogClient.Models
 {
-    public class BlogPost
+    public class BlogPost : TableData
     {
         public string Id { get; set; }
         public string Title { get; set; }

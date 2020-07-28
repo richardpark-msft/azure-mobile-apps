@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.Core;
+using Azure.Mobile.Client;
 using Bogus;
+using Microsoft.Identity.Client;
 using XFBlogClient.Models;
 
 namespace XFBlogClient.Services
@@ -27,6 +30,30 @@ namespace XFBlogClient.Services
 
             _blogPosts = testBlogPosts.Generate(20);
         }
+
+        public async Task Login()
+        {
+            if (App.AuthenticationClient is null)
+            {
+                throw new NullReferenceException("AuthenticationClient is null");
+            }
+
+            var accounts = await App.AuthenticationClient.GetAccountsAsync();
+            AuthenticationResult result;
+            try
+            {
+                result = await App.AuthenticationClient.AcquireTokenSilent(Constants.Scopes, accounts.FirstOrDefault()).ExecuteAsync();
+            }
+            catch (MsalUiRequiredException ex)
+            {
+                result = await App.AuthenticationClient.AcquireTokenInteractive(Constants.Scopes).ExecuteAsync();
+            }
+            
+            var client = new MobileDataClient(new Uri("https://blogserver-zumo-next.azurewebsites.net"), result);
+            var table = client.GetTable<BlogPost>();
+            var list = table.GetItems();
+        }
+
 
         public async Task<bool> AddItemAsync(BlogPost blogPost)
         {
