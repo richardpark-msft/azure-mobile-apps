@@ -104,6 +104,15 @@ namespace Azure.Mobile.Server
         /// <returns>The prepared item</returns>
         public virtual TEntity PrepareItemForStore(TEntity item) => item;
 
+        /// <summary>
+        /// Prepares the item for storing into the backend store.  This is a opportunity for the application
+        /// to add additional meta-data that is not passed back to the client (such as the user ID in a 
+        /// personal data store).
+        /// </summary>
+        /// <param name="item">The item to be prepared</param>
+        /// <returns>The prepared item</returns>
+        public virtual Task<TEntity> PrepareItemForStoreAsync(TEntity item)
+            => Task.Run(() => PrepareItemForStore(item));
 
         /// <summary>
         /// The <see cref="TableControllerOptions{T}"/> for this controller.  This is used to specify
@@ -156,10 +165,17 @@ namespace Azure.Mobile.Server
             odataOptions.Validate(odataValidationSettings);
             var odataQuery = odataOptions.ApplyTo(dataView.AsQueryable(), odataQuerySettings);
 
-            var result = new PagedListResult<TEntity> {
-                Values = odataQuery as IEnumerable<TEntity>,
-                NextLink = Request.GetNextPageLink(TableControllerOptions.PageSize)
+            // BUG: NextLink is always produced, resulting in a infinite loop in the client
+            // Fix right now - if Values[].Count == 0, then don't set the NextLink
+            var items = odataQuery as IEnumerable<TEntity>;
+            var result = new PagedListResult<TEntity>
+            {
+                Values = odataQuery as IEnumerable<TEntity>
             };
+            if (items.Count() > 0)
+            {
+                result.NextLink = Request.GetNextPageLink(TableControllerOptions.PageSize);
+            }
 
             // TODO: THIS DOES NOT WORK
             //if (odataOptions.Count != null)
@@ -196,6 +212,7 @@ namespace Azure.Mobile.Server
             var preconditionStatusCode = ETag.EvaluatePreconditions(entity, Request.GetTypedHeaders());
             if (preconditionStatusCode != StatusCodes.Status200OK)
             {
+                AddHeadersToResponse(entity);
                 return StatusCode(preconditionStatusCode, entity);
             }
 
@@ -205,7 +222,8 @@ namespace Azure.Mobile.Server
                 return Conflict(entity);
             }
 
-            var createdEntity = await TableRepository.CreateAsync(PrepareItemForStore(item)).ConfigureAwait(false);
+            var preparedItem = await PrepareItemForStoreAsync(item).ConfigureAwait(false);
+            var createdEntity = await TableRepository.CreateAsync(preparedItem).ConfigureAwait(false);
             AddHeadersToResponse(createdEntity);
             var uri = $"{Request.GetEncodedUrl()}/{createdEntity.Id}";
             return Created(uri, createdEntity);
@@ -237,7 +255,8 @@ namespace Azure.Mobile.Server
             if (TableControllerOptions.SoftDeleteEnabled)
             {
                 entity.Deleted = true;
-                await TableRepository.ReplaceAsync(PrepareItemForStore(entity)).ConfigureAwait(false);
+                var preparedItem = await PrepareItemForStoreAsync(entity).ConfigureAwait(false);
+                await TableRepository.ReplaceAsync(preparedItem).ConfigureAwait(false);
             } 
             else
             {
@@ -309,7 +328,8 @@ namespace Azure.Mobile.Server
                 return StatusCode(preconditionStatusCode, entity);
             }
 
-            var replacement = await TableRepository.ReplaceAsync(PrepareItemForStore(item)).ConfigureAwait(false);
+            var preparedItem = await PrepareItemForStoreAsync(item).ConfigureAwait(false);
+            var replacement = await TableRepository.ReplaceAsync(preparedItem).ConfigureAwait(false);
             AddHeadersToResponse(replacement);
             return Ok(replacement);
         }
@@ -362,7 +382,8 @@ namespace Azure.Mobile.Server
                 return NotFound();
             }
 
-            var replacement = await TableRepository.ReplaceAsync(PrepareItemForStore(entity)).ConfigureAwait(false);
+            var preparedItem = await PrepareItemForStoreAsync(entity).ConfigureAwait(false);
+            var replacement = await TableRepository.ReplaceAsync(preparedItem).ConfigureAwait(false);
             AddHeadersToResponse(replacement);
             return Ok(replacement);
         }

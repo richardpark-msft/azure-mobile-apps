@@ -34,6 +34,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{055F0DAA-6
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Mobile.Client", "dotnet\client\src\Azure.Mobile.Client\Azure.Mobile.Client.csproj", "{AE882E4E-BD34-4994-86A9-B4E89DC42FC1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Mobile.Client.Test", "dotnet\client\test\Azure.Mobile.Client.Test\Azure.Mobile.Client.Test.csproj", "{B6D5BFCB-478C-495B-86CD-68AAFDEE6834}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlogServer", "dotnet\samples\BlogServer\BlogServer.csproj", "{BBA7203E-A20D-486F-B477-14AC5D5AD4B1}"
 EndProject
 Global
@@ -70,6 +72,10 @@ Global
 		{BBA7203E-A20D-486F-B477-14AC5D5AD4B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BBA7203E-A20D-486F-B477-14AC5D5AD4B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BBA7203E-A20D-486F-B477-14AC5D5AD4B1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B6D5BFCB-478C-495B-86CD-68AAFDEE6834}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B6D5BFCB-478C-495B-86CD-68AAFDEE6834}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B6D5BFCB-478C-495B-86CD-68AAFDEE6834}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B6D5BFCB-478C-495B-86CD-68AAFDEE6834}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -86,6 +92,7 @@ Global
 		{055F0DAA-62AD-403D-8288-B60D02A0ABC1} = {77AA4556-5C51-4A84-A1E2-C80A9EA29374}
 		{AE882E4E-BD34-4994-86A9-B4E89DC42FC1} = {FEF7CEEF-50E3-4FDB-8F58-479C6B3B9BFB}
 		{BBA7203E-A20D-486F-B477-14AC5D5AD4B1} = {A6A816F1-EB1C-4C9A-8AB0-6119E7A79302}
+		{B6D5BFCB-478C-495B-86CD-68AAFDEE6834} = {055F0DAA-62AD-403D-8288-B60D02A0ABC1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3B7D84DF-EF2C-47CA-880E-D600E89CA1EB}
