@@ -17,12 +17,12 @@ namespace Azure.Mobile.Server.Entity
         /// <summary>
         /// The EF Core DbContext for requests to the backend.
         /// </summary>
-        private DbContext Context { get; set; }
+        protected DbContext Context { get; set; }
 
         /// <summary>
         /// The EF Core data set.
         /// </summary>
-        private DbSet<TEntity> DataSet { get; set; }
+        protected DbSet<TEntity> DataSet { get; set; }
 
         /// <summary>
         /// Create a new <see cref="EntityTableRepository{TEntity}"/> with the specified DbContext. This

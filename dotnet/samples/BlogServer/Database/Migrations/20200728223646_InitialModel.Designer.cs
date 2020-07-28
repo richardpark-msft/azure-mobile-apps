@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BlogServer.Database.Migrations
 {
     [DbContext(typeof(BlogDbContext))]
-    [Migration("20200728190216_InitialModel")]
+    [Migration("20200728223646_InitialModel")]
     partial class InitialModel
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -20,6 +20,43 @@ namespace BlogServer.Database.Migrations
                 .HasAnnotation("ProductVersion", "3.1.6")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("BlogServer.DataObjects.BlogComment", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<bool>("Deleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("OwnerId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("PostId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTimeOffset>("PostedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("Text")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTimeOffset>("UpdatedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<byte[]>("Version")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OwnerId");
+
+                    b.HasIndex("PostId");
+
+                    b.ToTable("BlogComments");
+                });
 
             modelBuilder.Entity("BlogServer.DataObjects.BlogPost", b =>
                 {
@@ -93,43 +130,6 @@ namespace BlogServer.Database.Migrations
                     b.ToTable("Bookmarks");
                 });
 
-            modelBuilder.Entity("BlogServer.DataObjects.PostComment", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<bool>("Deleted")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("OwnerId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("PostId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTimeOffset>("PostedAt")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("Text")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTimeOffset>("UpdatedAt")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<byte[]>("Version")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("OwnerId");
-
-                    b.HasIndex("PostId");
-
-                    b.ToTable("PostComments");
-                });
-
             modelBuilder.Entity("BlogServer.DataObjects.User", b =>
                 {
                     b.Property<string>("Id")
@@ -157,6 +157,17 @@ namespace BlogServer.Database.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("BlogServer.DataObjects.BlogComment", b =>
+                {
+                    b.HasOne("BlogServer.DataObjects.User", null)
+                        .WithMany()
+                        .HasForeignKey("OwnerId");
+
+                    b.HasOne("BlogServer.DataObjects.BlogPost", null)
+                        .WithMany()
+                        .HasForeignKey("PostId");
+                });
+
             modelBuilder.Entity("BlogServer.DataObjects.BlogPost", b =>
                 {
                     b.HasOne("BlogServer.DataObjects.User", null)
@@ -173,17 +184,6 @@ namespace BlogServer.Database.Migrations
                     b.HasOne("BlogServer.DataObjects.User", null)
                         .WithMany()
                         .HasForeignKey("UserId");
-                });
-
-            modelBuilder.Entity("BlogServer.DataObjects.PostComment", b =>
-                {
-                    b.HasOne("BlogServer.DataObjects.User", null)
-                        .WithMany()
-                        .HasForeignKey("OwnerId");
-
-                    b.HasOne("BlogServer.DataObjects.BlogPost", null)
-                        .WithMany()
-                        .HasForeignKey("PostId");
                 });
 #pragma warning restore 612, 618
         }

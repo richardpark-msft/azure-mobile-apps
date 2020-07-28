@@ -50,6 +50,36 @@ namespace BlogServer.Database.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "BlogComments",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    UpdatedAt = table.Column<DateTimeOffset>(nullable: false),
+                    Version = table.Column<byte[]>(rowVersion: true, nullable: true),
+                    Deleted = table.Column<bool>(nullable: false),
+                    PostId = table.Column<string>(nullable: true),
+                    Text = table.Column<string>(nullable: true),
+                    OwnerId = table.Column<string>(nullable: true),
+                    PostedAt = table.Column<DateTimeOffset>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BlogComments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_BlogComments_Users_OwnerId",
+                        column: x => x.OwnerId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_BlogComments_BlogPosts_PostId",
+                        column: x => x.PostId,
+                        principalTable: "BlogPosts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Bookmarks",
                 columns: table => new
                 {
@@ -77,35 +107,15 @@ namespace BlogServer.Database.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "PostComments",
-                columns: table => new
-                {
-                    Id = table.Column<string>(nullable: false),
-                    UpdatedAt = table.Column<DateTimeOffset>(nullable: false),
-                    Version = table.Column<byte[]>(rowVersion: true, nullable: true),
-                    Deleted = table.Column<bool>(nullable: false),
-                    PostId = table.Column<string>(nullable: true),
-                    Text = table.Column<string>(nullable: true),
-                    OwnerId = table.Column<string>(nullable: true),
-                    PostedAt = table.Column<DateTimeOffset>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_PostComments", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_PostComments_Users_OwnerId",
-                        column: x => x.OwnerId,
-                        principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_PostComments_BlogPosts_PostId",
-                        column: x => x.PostId,
-                        principalTable: "BlogPosts",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
+            migrationBuilder.CreateIndex(
+                name: "IX_BlogComments_OwnerId",
+                table: "BlogComments",
+                column: "OwnerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BlogComments_PostId",
+                table: "BlogComments",
+                column: "PostId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_BlogPosts_OwnerId",
@@ -121,25 +131,15 @@ namespace BlogServer.Database.Migrations
                 name: "IX_Bookmarks_UserId",
                 table: "Bookmarks",
                 column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_PostComments_OwnerId",
-                table: "PostComments",
-                column: "OwnerId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_PostComments_PostId",
-                table: "PostComments",
-                column: "PostId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Bookmarks");
+                name: "BlogComments");
 
             migrationBuilder.DropTable(
-                name: "PostComments");
+                name: "Bookmarks");
 
             migrationBuilder.DropTable(
                 name: "BlogPosts");

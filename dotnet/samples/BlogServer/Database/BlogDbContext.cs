@@ -10,7 +10,7 @@ namespace BlogServer.Database
         }
 
         public DbSet<BlogPost> BlogPosts { get; set; }
-        public DbSet<PostComment> PostComments { get; set; }
+        public DbSet<BlogComment> BlogComments { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Bookmark> Bookmarks { get; set; }
 
@@ -18,12 +18,12 @@ namespace BlogServer.Database
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<PostComment>()
+            modelBuilder.Entity<BlogComment>()
                 .HasOne<BlogPost>()
                 .WithMany()
                 .HasForeignKey(comment => comment.PostId);
 
-            modelBuilder.Entity<PostComment>()
+            modelBuilder.Entity<BlogComment>()
                .HasOne<User>()
                .WithMany()
                .HasForeignKey(comment => comment.OwnerId);

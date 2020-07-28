@@ -3,7 +3,7 @@ using System;
 
 namespace BlogServer.DataObjects
 {
-    public class PostComment : EntityTableData
+    public class BlogComment : EntityTableData
     {
         public string PostId { get; set; }
         public string Text { get; set; }
