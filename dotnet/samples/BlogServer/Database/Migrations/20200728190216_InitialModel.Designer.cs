@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BlogServer.Database.Migrations
 {
     [DbContext(typeof(BlogDbContext))]
-    [Migration("20200728185305_InitialModel")]
+    [Migration("20200728190216_InitialModel")]
     partial class InitialModel
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -90,7 +90,7 @@ namespace BlogServer.Database.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Bookmark");
+                    b.ToTable("Bookmarks");
                 });
 
             modelBuilder.Entity("BlogServer.DataObjects.PostComment", b =>

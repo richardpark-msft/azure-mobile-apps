@@ -88,7 +88,7 @@ namespace BlogServer.Database.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Bookmark");
+                    b.ToTable("Bookmarks");
                 });
 
             modelBuilder.Entity("BlogServer.DataObjects.PostComment", b =>

@@ -12,6 +12,7 @@ namespace BlogServer.Database
         public DbSet<BlogPost> BlogPosts { get; set; }
         public DbSet<PostComment> PostComments { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<Bookmark> Bookmarks { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

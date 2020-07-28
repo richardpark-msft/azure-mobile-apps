@@ -50,7 +50,7 @@ namespace BlogServer.Database.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Bookmark",
+                name: "Bookmarks",
                 columns: table => new
                 {
                     Id = table.Column<string>(nullable: false),
@@ -62,15 +62,15 @@ namespace BlogServer.Database.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Bookmark", x => x.Id);
+                    table.PrimaryKey("PK_Bookmarks", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Bookmark_BlogPosts_PostId",
+                        name: "FK_Bookmarks_BlogPosts_PostId",
                         column: x => x.PostId,
                         principalTable: "BlogPosts",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Bookmark_Users_UserId",
+                        name: "FK_Bookmarks_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
@@ -113,13 +113,13 @@ namespace BlogServer.Database.Migrations
                 column: "OwnerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Bookmark_PostId",
-                table: "Bookmark",
+                name: "IX_Bookmarks_PostId",
+                table: "Bookmarks",
                 column: "PostId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Bookmark_UserId",
-                table: "Bookmark",
+                name: "IX_Bookmarks_UserId",
+                table: "Bookmarks",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
@@ -136,7 +136,7 @@ namespace BlogServer.Database.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Bookmark");
+                name: "Bookmarks");
 
             migrationBuilder.DropTable(
                 name: "PostComments");
